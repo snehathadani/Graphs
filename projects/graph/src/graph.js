@@ -3,6 +3,10 @@
  */
 export class Edge {
   // !!! IMPLEMENT ME
+  constructor(destination, weight = 1){
+    this.destination = destination;
+    this.weight = weight;
+  }
 }
 
 /**
@@ -10,6 +14,13 @@ export class Edge {
  */
 export class Vertex {
   // !!! IMPLEMENT ME
+  constructor(value = 'vertex', pos ={x :-1, y:-1}){
+    this.value = value;
+    this.edges = [];
+    this.pos = pos;
+    this.fillColor ='red';
+    this.parentVertex=null;
+  }
 }
 
 /**
@@ -19,7 +30,13 @@ export class Graph {
   constructor() {
     this.vertexes = [];
   }
-
+  debugCreateTestData(){
+    console.log("Debug: Ran debugCreateTestData()")
+    let debugVert1 = new Vertex('dv1', {x:10, y:20});
+    let debugVert2 = new Vertex('dv2', {x:100, y:100});
+    this.vertexes.push(debugVert1);
+    this.vertexes.push(debugVert2);
+  }
   /**
    * Create a random graph
    */
@@ -111,6 +128,32 @@ export class Graph {
    */
   bfs(start) {
     // !!! IMPLEMENT ME
+    //start at the 1st vertext in the list
+    //and push it to the queue and list of places we've been
+    let queue = [];
+    queue.push(start);
+    console.log("BFS starting vertex",queue[0]);
+    //current group is 0 to start
+
+    let currentGroup = "red";//start witha random color
+    while(queue.length > 0)
+    {
+      let current = queue[0];
+      for (let edge in current.edges)
+      {//additng the destination to the bottom of the 
+          //queue if not visited
+          //mark it as being in this group
+
+        if (edge.destination.fillColor == 'white')
+        {
+          queue.push(edge.destination);
+          edge.destination.fillcolor = currentGroup;
+        }
+       }
+       //remove the current node from the queue
+       queue.shift();
+    }
+
   }
 
   /**
